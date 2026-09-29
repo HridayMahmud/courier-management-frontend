@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { EmptyState } from "@/components/dashboard/empty-state";
+import { ErrorState } from "@/components/dashboard/error-state";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { ParcelCard } from "@/components/parcels/parcel-card";
 import { StatusSelect } from "@/components/parcels/status-select";
@@ -27,7 +28,7 @@ export default function MyParcelsPage() {
   const { dict, lang } = useI18n();
   const t = dict.customer;
   const router = useRouter();
-  const { data, isPending } = useMyParcels();
+  const { data, isPending, isError, error, refetch } = useMyParcels();
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<ParcelStatus | "">("");
   const [view, setView] = useState<"table" | "cards">("table");
@@ -114,6 +115,8 @@ export default function MyParcelsPage() {
             <Skeleton key={i} className="h-14 rounded-xl" />
           ))}
         </div>
+      ) : isError ? (
+        <ErrorState error={error} onRetry={() => refetch()} />
       ) : (data ?? []).length === 0 ? (
         <EmptyState
           icon={Package}

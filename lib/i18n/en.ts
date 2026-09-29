@@ -286,6 +286,15 @@ export const en = {
     confirm: "Confirm",
     lastUpdate: "Updated {time}",
   },
+  errors: {
+    notFoundCode: "404",
+    notFoundTitle: "This page took a wrong turn",
+    notFoundText: "The page you’re looking for doesn’t exist or has moved.",
+    goHome: "Back to home",
+    trackInstead: "Track a parcel",
+    errorTitle: "Something went wrong",
+    errorText: "An unexpected error occurred. Please try again.",
+  },
   auth: {
     panelTitle: "Every parcel, every step, in one place.",
     panelSubtitle: "Book pickups, follow deliveries live and keep customers informed — without the phone calls.",

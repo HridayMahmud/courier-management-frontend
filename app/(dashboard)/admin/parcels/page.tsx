@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ParcelActions } from "@/components/admin/parcel-actions";
 import { EmptyState } from "@/components/dashboard/empty-state";
+import { ErrorState } from "@/components/dashboard/error-state";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { StatusSelect } from "@/components/parcels/status-select";
 import { Pager } from "@/components/shared/pager";
@@ -30,7 +31,7 @@ export default function AdminParcelsPage() {
   const [status, setStatus] = useState<ParcelStatus | "">("");
   const [page, setPage] = useState(1);
   const debounced = useDebounced(search.trim());
-  const { data, isPending, isFetching } = useParcelList({ page, limit: 10, status, search: debounced });
+  const { data, isPending, isFetching, isError, error, refetch } = useParcelList({ page, limit: 10, status, search: debounced });
 
   const hasFilters = !!search || !!status;
   const href = (id: string) => `/admin/parcels/${id}`;
@@ -63,6 +64,8 @@ export default function AdminParcelsPage() {
             <Skeleton key={i} className="h-14 rounded-xl" />
           ))}
         </div>
+      ) : isError && !data ? (
+        <ErrorState error={error} onRetry={() => refetch()} />
       ) : !data || data.total === 0 ? (
         hasFilters ? (
           <EmptyState

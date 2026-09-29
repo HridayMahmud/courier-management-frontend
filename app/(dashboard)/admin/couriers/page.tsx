@@ -10,6 +10,7 @@ import { z } from "zod";
 import { initials } from "@/components/admin/assign-dialog";
 import { FormField } from "@/components/auth/form-field";
 import { EmptyState } from "@/components/dashboard/empty-state";
+import { ErrorState } from "@/components/dashboard/error-state";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Reveal } from "@/components/shared/reveal";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -105,7 +106,7 @@ function AddCourierDialog({ open, onOpenChange }: { open: boolean; onOpenChange:
 export default function CouriersPage() {
   const { dict, lang } = useI18n();
   const t = dict.admin;
-  const { data, isPending } = useCouriers();
+  const { data, isPending, isError, error, refetch } = useCouriers();
   const [open, setOpen] = useState(false);
 
   return (
@@ -126,6 +127,8 @@ export default function CouriersPage() {
             <Skeleton key={i} className="h-40 rounded-2xl" />
           ))}
         </div>
+      ) : isError ? (
+        <ErrorState error={error} onRetry={() => refetch()} />
       ) : !data?.length ? (
         <EmptyState
           icon={Users}

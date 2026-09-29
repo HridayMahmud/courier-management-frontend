@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { DeliveryCard } from "@/components/courier/delivery-card";
 import { EmptyState } from "@/components/dashboard/empty-state";
+import { ErrorState } from "@/components/dashboard/error-state";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -24,7 +25,7 @@ export default function CourierPage() {
   const t = dict.courier;
   const mounted = useMounted();
   const { data: me } = useMe();
-  const { data, isPending } = useAssignedParcels();
+  const { data, isPending, isError, error, refetch } = useAssignedParcels();
   const [tab, setTab] = useState<"active" | "done">("active");
 
   const all = data ?? [];
@@ -75,6 +76,8 @@ export default function CourierPage() {
             <Skeleton key={i} className="h-80 rounded-2xl" />
           ))}
         </div>
+      ) : isError ? (
+        <ErrorState error={error} onRetry={() => refetch()} />
       ) : list.length === 0 ? (
         <EmptyState icon={tab === "active" ? Truck : CircleCheckBig} title={tab === "active" ? t.emptyActive : t.emptyDone} text={tab === "active" ? t.emptyActiveText : undefined} />
       ) : (

@@ -3,6 +3,7 @@
 import { ArrowRight, CircleCheckBig, Clock3, Package, PackagePlus, Truck } from "lucide-react";
 import Link from "next/link";
 import { EmptyState } from "@/components/dashboard/empty-state";
+import { ErrorState } from "@/components/dashboard/error-state";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { ParcelCard } from "@/components/parcels/parcel-card";
@@ -21,7 +22,7 @@ export default function CustomerOverview() {
   const t = dict.customer;
   const mounted = useMounted();
   const { data: me } = useMe();
-  const { data: parcels, isPending } = useMyParcels();
+  const { data: parcels, isPending, isError, error, refetch } = useMyParcels();
   const list = parcels ?? [];
   const firstName = mounted && me ? me.name.split(" ")[0] : "";
 
@@ -70,6 +71,8 @@ export default function CustomerOverview() {
               <Skeleton key={i} className="h-52 rounded-2xl" />
             ))}
           </div>
+        ) : isError ? (
+          <ErrorState error={error} onRetry={() => refetch()} />
         ) : list.length === 0 ? (
           <EmptyState
             icon={Package}

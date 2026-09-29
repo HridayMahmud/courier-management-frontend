@@ -4,6 +4,7 @@ import { ArrowRight, CircleCheckBig, Clock3, Package, Truck } from "lucide-react
 import Link from "next/link";
 import { DailyChart } from "@/components/admin/daily-chart";
 import { StatusBreakdown } from "@/components/admin/status-breakdown";
+import { ErrorState } from "@/components/dashboard/error-state";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { StatusBadge } from "@/components/shared/status-badge";
@@ -18,7 +19,15 @@ import type { UserRef } from "@/lib/types";
 export default function AdminOverview() {
   const { dict, lang } = useI18n();
   const t = dict.admin;
-  const { data, isPending } = useStats();
+  const { data, isPending, isError, error, refetch } = useStats();
+  if (isError) {
+    return (
+      <>
+        <PageHeader title={dict.nav.overview} description={t.overviewSubtitle} />
+        <ErrorState error={error} onRetry={() => refetch()} />
+      </>
+    );
+  }
   const n = (v: number) => formatNumber(v, lang);
 
   const by = data?.byStatus;
