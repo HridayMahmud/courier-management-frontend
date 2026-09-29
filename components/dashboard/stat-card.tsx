@@ -22,6 +22,7 @@ export function StatCard({
   tint = "indigo",
   hint,
   loading,
+  compact = false,
 }: {
   label: string;
   value: number;
@@ -29,12 +30,14 @@ export function StatCard({
   tint?: keyof typeof TINTS;
   hint?: React.ReactNode;
   loading?: boolean;
+  // tighter padding and no icon on phones, for rows of three
+  compact?: boolean;
 }) {
   return (
-    <div className="group relative overflow-hidden rounded-2xl border bg-card p-5 shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:shadow-glow">
+    <div className={cn("group relative overflow-hidden rounded-2xl border bg-card shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:shadow-glow", compact ? "p-3.5 sm:p-5" : "p-5")}>
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
-          <p className="text-sm text-muted-foreground">{label}</p>
+          <p className={cn("text-muted-foreground", compact ? "text-xs sm:text-sm" : "text-sm")}>{label}</p>
           {loading ? (
             <Skeleton className="h-8 w-16" />
           ) : (
@@ -43,7 +46,7 @@ export function StatCard({
             </p>
           )}
         </div>
-        <span className={cn("grid size-11 place-items-center rounded-xl", TINTS[tint])}>
+        <span className={cn("size-11 shrink-0 place-items-center rounded-xl", compact ? "hidden sm:grid" : "grid", TINTS[tint])}>
           <Icon className="size-5" />
         </span>
       </div>
