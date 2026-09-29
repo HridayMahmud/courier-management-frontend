@@ -7,6 +7,8 @@ export interface NavItem {
   label: string;
   icon: LucideIcon;
   exact?: boolean;
+  // sub-paths that belong to another menu item
+  exclude?: string[];
 }
 
 export function navForRole(role: Role, dict: Dictionary): NavItem[] {
@@ -22,7 +24,7 @@ export function navForRole(role: Role, dict: Dictionary): NavItem[] {
   }
   return [
     { href: "/dashboard", label: dict.nav.overview, icon: LayoutDashboard, exact: true },
-    { href: "/dashboard/parcels", label: dict.nav.myParcels, icon: Package, exact: true },
+    { href: "/dashboard/parcels", label: dict.nav.myParcels, icon: Package, exclude: ["/dashboard/parcels/new"] },
     { href: "/dashboard/parcels/new", label: dict.nav.newParcel, icon: PackagePlus },
   ];
 }
@@ -35,5 +37,6 @@ export function roleForPath(pathname: string): Role {
 }
 
 export function isActive(item: NavItem, pathname: string) {
+  if (item.exclude?.some((p) => pathname.startsWith(p))) return false;
   return item.exact ? pathname === item.href : pathname === item.href || pathname.startsWith(`${item.href}/`);
 }

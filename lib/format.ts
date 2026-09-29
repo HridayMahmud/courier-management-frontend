@@ -38,6 +38,11 @@ export function formatRelative(iso: string | Date, lang: Lang) {
   return rtf.format(Math.round(diff), "second");
 }
 
+// "১.৫" -> "1.5" so Bangla keyboards work in number fields
+export function toAsciiDigits(value: string) {
+  return value.replace(/[০-৯]/g, (d) => String(d.charCodeAt(0) - 0x09e6));
+}
+
 export function normalizeTrackingId(value: string) {
   return value.trim().toUpperCase().replace(/\s+/g, "");
 }
