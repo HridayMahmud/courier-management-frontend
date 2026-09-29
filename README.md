@@ -51,9 +51,7 @@ middleware.ts     role-based route protection
    e.g. `https://courier-management-backend-swrf.onrender.com` (no trailing slash).
 4. Deploy. The backend uses open CORS, so no backend change is needed for the new domain.
 
-Before going live, replace the placeholder marketing content: the three testimonials and the quote on
-the sign-in panel (`lib/i18n/en.ts` and `lib/i18n/bn.ts`), and the sample rows in the hero preview
-(`components/marketing/hero.tsx`).
+The rows in the landing page hero preview (`components/marketing/hero.tsx`) are illustrative sample data, not real parcels.
 
 ## Auth
 The JWT from `/api/auth/login` is stored in the `ss_token` cookie. `middleware.ts` reads it to

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, BarChart3, Globe2, LayoutDashboard, PackagePlus, ShieldCheck, Star, Truck, UserCheck, Waypoints, type LucideIcon } from "lucide-react";
+import { ArrowRight, BarChart3, EyeOff, Globe2, History, LayoutDashboard, PackagePlus, ShieldCheck, Smartphone, Truck, UserCheck, Waypoints, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { Counter } from "@/components/shared/counter";
 import { Reveal } from "@/components/shared/reveal";
@@ -111,35 +111,30 @@ export function HowItWorks() {
   );
 }
 
-export function Testimonials() {
+const HIGHLIGHT_ICONS: LucideIcon[] = [History, EyeOff, Smartphone];
+
+export function Highlights() {
   const { dict } = useI18n();
   const t = dict.landing;
   return (
     <section className="py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <SectionHeading eyebrow={t.testimonialsEyebrow} title={t.testimonialsTitle} />
+        <SectionHeading eyebrow={t.highlightsEyebrow} title={t.highlightsTitle} />
         <div className="grid gap-5 md:grid-cols-3">
-          {t.testimonials.map((item, i) => (
-            <Reveal key={item.name} delay={i * 0.1}>
-              <figure className="flex h-full flex-col rounded-2xl border bg-card p-6 shadow-soft">
-                <div className="flex gap-0.5 text-amber-400" aria-hidden="true">
-                  {Array.from({ length: 5 }).map((_, s) => (
-                    <Star key={s} className="size-4 fill-current" />
-                  ))}
+          {t.highlights.map((item, i) => {
+            const Icon = HIGHLIGHT_ICONS[i];
+            return (
+              <Reveal key={item.title} delay={i * 0.1}>
+                <div className="flex h-full flex-col rounded-2xl border bg-card p-6 shadow-soft">
+                  <span className="grid size-11 place-items-center rounded-xl bg-gradient-to-br from-primary to-chart-5 text-white shadow-glow">
+                    <Icon className="size-5" />
+                  </span>
+                  <h3 className="mt-5 text-lg font-semibold">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
                 </div>
-                <blockquote className="mt-4 flex-1 text-sm leading-relaxed">“{item.quote}”</blockquote>
-                <figcaption className="mt-6 flex items-center gap-3">
-                  <span className="grid size-10 place-items-center rounded-full bg-gradient-to-br from-primary to-chart-5 text-sm font-semibold text-white">
-                    {item.name.charAt(0)}
-                  </span>
-                  <span>
-                    <span className="block text-sm font-medium">{item.name}</span>
-                    <span className="block text-xs text-muted-foreground">{item.role}</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>

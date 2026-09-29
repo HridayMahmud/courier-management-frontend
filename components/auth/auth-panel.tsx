@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, MapPin, Package, Quote } from "lucide-react";
+import { Check, MapPin, Package, ShieldCheck } from "lucide-react";
 import { motion } from "motion/react";
 import { RouteAnimation } from "@/components/brand/route-animation";
 import { StatusBadge } from "@/components/shared/status-badge";
@@ -69,11 +69,10 @@ export function AuthPanel() {
           </motion.div>
         </div>
 
-        <figure className="max-w-md space-y-2 border-l-2 border-amber-400/60 pl-4">
-          <Quote className="size-4 text-amber-300" />
-          <blockquote className="text-sm text-white/80">{dict.auth.panelQuote}</blockquote>
-          <figcaption className="text-xs text-white/45">— {dict.auth.panelQuoteBy}</figcaption>
-        </figure>
+        <p className="flex max-w-md items-start gap-3 border-l-2 border-amber-400/60 pl-4 text-sm text-white/80">
+          <ShieldCheck className="mt-0.5 size-4 shrink-0 text-amber-300" />
+          {dict.auth.panelFact}
+        </p>
       </div>
     </div>
   );
