@@ -1,7 +1,7 @@
 "use client";
 
 import { LogOut, Menu } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -156,18 +156,16 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        <AnimatePresence mode="wait">
-          <motion.main
-            key={pathname}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.22, ease: "easeOut" }}
-            className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8"
-          >
-            {children}
-          </motion.main>
-        </AnimatePresence>
+        {/* enter-only transition: an exit phase would mount the next page twice and drop its state */}
+        <motion.main
+          key={pathname}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.22, ease: "easeOut" }}
+          className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8"
+        >
+          {children}
+        </motion.main>
       </div>
     </div>
   );

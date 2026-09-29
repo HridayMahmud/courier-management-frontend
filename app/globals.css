@@ -78,6 +78,13 @@
   --chart-4: oklch(0.696 0.17 162.48);
   --chart-5: oklch(0.606 0.25 292.72);
   --radius: 0.75rem;
+  /* status colors, validated as an ordered set (dataviz validator) for light and dark */
+  --status-pending: #eda100;
+  --status-picked-up: #e87ba4;
+  --status-in-transit: #2a78d6;
+  --status-out-for-delivery: #1baf7a;
+  --status-delivered: #008300;
+  --status-cancelled: #e34948;
   --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.21 0.035 272);
   --sidebar-primary: oklch(0.511 0.262 276.97);
@@ -114,6 +121,12 @@
   --chart-3: oklch(0.75 0.13 215);
   --chart-4: oklch(0.74 0.16 162);
   --chart-5: oklch(0.68 0.2 293);
+  --status-pending: #c98500;
+  --status-picked-up: #d55181;
+  --status-in-transit: #3987e5;
+  --status-out-for-delivery: #1baf7a;
+  --status-delivered: #008300;
+  --status-cancelled: #e66767;
   --sidebar: oklch(0.185 0.033 269);
   --sidebar-foreground: oklch(0.96 0.006 272);
   --sidebar-primary: oklch(0.62 0.21 277);
