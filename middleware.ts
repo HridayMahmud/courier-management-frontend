@@ -16,6 +16,14 @@ export function middleware(req: NextRequest) {
   const token = req.cookies.get(TOKEN_COOKIE)?.value;
   const payload = decodeToken(token);
 
+  // account settings: any signed-in role
+  if (pathname === "/account" || pathname.startsWith("/account/")) {
+    if (payload) return NextResponse.next();
+    const url = new URL("/login", req.url);
+    url.searchParams.set("next", pathname);
+    return NextResponse.redirect(url);
+  }
+
   const area = AREAS.find((a) => pathname === a.prefix || pathname.startsWith(`${a.prefix}/`));
   if (area) {
     if (!payload) {
@@ -40,5 +48,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/courier/:path*", "/dashboard/:path*", "/login", "/register", "/forgot-password", "/reset-password"],
+  matcher: ["/admin/:path*", "/courier/:path*", "/dashboard/:path*", "/account", "/login", "/register", "/forgot-password", "/reset-password"],
 };

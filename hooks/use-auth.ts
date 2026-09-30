@@ -49,3 +49,15 @@ export function useLogout() {
     router.refresh();
   };
 }
+
+export function useUpdateMe() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: authApi.updateMe,
+    onSuccess: (data) => queryClient.setQueryData(meKey, data.user),
+  });
+}
+
+export function useChangePassword() {
+  return useMutation({ mutationFn: authApi.changePassword });
+}

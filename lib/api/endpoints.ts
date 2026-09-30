@@ -21,6 +21,9 @@ export const authApi = {
   resetPassword: (body: { email: string; token: string; password: string }) =>
     api.post<{ message: string }>("/auth/reset-password", body).then((r) => r.data),
   me: () => api.get<{ user: User }>("/auth/me").then((r) => r.data.user),
+  updateMe: (body: { name: string }) => api.patch<{ message: string; user: User }>("/auth/me", body).then((r) => r.data),
+  changePassword: (body: { currentPassword: string; newPassword: string }) =>
+    api.patch<{ message: string }>("/auth/password", body).then((r) => r.data),
 };
 
 export interface ParcelListParams {

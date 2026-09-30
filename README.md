@@ -43,6 +43,8 @@ If pages say "Cannot reach the server", the backend is not running or `NEXT_PUBL
 - `npm run build` — production build
 - `npm run start` — serve the production build
 - `npm run lint` — ESLint
+- `npm run test:e2e` — browser tests (`e2e/`): account settings and the full customer → admin → courier → tracking journey.
+  Needs the backend on :4000 with `npm run seed:demo` and `RATE_LIMIT=off`, this app on :5001, and once `npx playwright install chromium`.
 
 ## Structure
 ```
@@ -65,6 +67,7 @@ middleware.ts     role-based route protection
 | `/dashboard`, `/dashboard/parcels`, `/dashboard/parcels/new`, `/dashboard/parcels/[id]` | customer | Overview, parcel list, booking wizard, details with edit/cancel |
 | `/admin`, `/admin/parcels`, `/admin/parcels/[id]`, `/admin/couriers` | admin | KPIs and charts, parcel management, couriers |
 | `/courier` | courier | Assigned deliveries with one-tap status updates |
+| `/account` | any signed-in user | Change name and password (user menu → Account settings) |
 
 ## Deploying (e.g. Vercel)
 1. Deploy the backend first and merge its `fix/security-and-tracking-api` branch (new endpoints are required).

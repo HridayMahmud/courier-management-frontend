@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut, Menu } from "lucide-react";
+import { LogOut, Menu, UserCog } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -22,6 +22,9 @@ import {
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useLogout, useMe } from "@/hooks/use-auth";
+import { TOKEN_COOKIE } from "@/lib/config";
+import { getCookie } from "@/lib/cookies";
+import { decodeToken } from "@/lib/jwt";
 import { useMounted } from "@/hooks/use-mounted";
 import { useI18n } from "@/lib/i18n";
 import { isActive, navForRole, roleForPath, type NavItem } from "./nav";
@@ -76,7 +79,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const logout = useLogout();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const role = me?.role ?? roleForPath(pathname);
+  const tokenRole = mounted ? decodeToken(getCookie(TOKEN_COOKIE))?.role : undefined;
+  const role = me?.role ?? (pathname.startsWith("/account") ? tokenRole : undefined) ?? roleForPath(pathname);
   const items = navForRole(role, dict);
 
   const userMenu = (
@@ -98,6 +102,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           <span className="truncate text-xs font-normal text-muted-foreground">{me?.email}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href="/account">
+            <UserCog /> {dict.account.menu}
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem variant="destructive" onSelect={logout}>
           <LogOut /> {dict.common.signOut}
         </DropdownMenuItem>
