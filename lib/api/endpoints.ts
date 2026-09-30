@@ -63,4 +63,6 @@ export const userApi = {
   couriers: () => api.get<Courier[]>("/users", { params: { role: "courier" } }).then((r) => r.data),
   createCourier: (body: { name: string; email: string; password: string }) =>
     api.post<{ message: string; user: User }>("/users/courier", body).then((r) => r.data),
+  resetPassword: (body: { email: string; newPassword: string }) =>
+    api.patch<{ message: string; user: Pick<User, "name" | "email" | "role"> }>("/users/password", body).then((r) => r.data),
 };

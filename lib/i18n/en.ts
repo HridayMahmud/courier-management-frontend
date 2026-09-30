@@ -259,6 +259,12 @@ export const en = {
     joined: "Joined",
     noCouriers: "No couriers yet",
     noCouriersText: "Add your first courier to start assigning deliveries.",
+    resetPassword: "Reset a password",
+    resetTitle: "Reset a user's password",
+    resetText: "For a customer or courier who forgot their password. Share the new password with them; they can change it later in Account settings.",
+    resetEmail: "User's email",
+    resetSubmit: "Set new password",
+    resetDone: "Password updated for {email}",
     workload: { free: "Available", busy: "Busy", heavy: "Heavy load" },
   },
   courier: {

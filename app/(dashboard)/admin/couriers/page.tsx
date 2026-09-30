@@ -2,13 +2,15 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "cn";
-import { AlertCircle, CalendarDays, Lock, Mail, User, UserPlus, Users } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { AlertCircle, CalendarDays, KeyRound, Lock, Mail, User, UserPlus, Users } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { initials } from "@/components/admin/assign-dialog";
 import { FormField } from "@/components/auth/form-field";
+import { PasswordStrength } from "@/components/auth/password-strength";
 import { EmptyState } from "@/components/dashboard/empty-state";
 import { ErrorState } from "@/components/dashboard/error-state";
 import { PageHeader } from "@/components/dashboard/page-header";
@@ -20,8 +22,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { useCouriers, useCreateCourier } from "@/hooks/use-parcels";
 import { getErrorMessage } from "@/lib/api/client";
+import { userApi } from "@/lib/api/endpoints";
 import { formatDate, formatNumber } from "@/lib/format";
-import { useI18n } from "@/lib/i18n";
+import { fmt, useI18n } from "@/lib/i18n";
 
 function workload(count: number) {
   if (count === 0) return { key: "free", className: "bg-emerald-500/12 text-emerald-700 dark:text-emerald-300" } as const;
@@ -103,11 +106,98 @@ function AddCourierDialog({ open, onOpenChange }: { open: boolean; onOpenChange:
   );
 }
 
+function ResetPasswordDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+  const { dict } = useI18n();
+  const a = dict.auth;
+  const t = dict.admin;
+  const reset = useMutation({ mutationFn: userApi.resetPassword });
+  const schema = useMemo(
+    () =>
+      z
+        .object({
+          email: z.string().trim().min(1, a.errors.emailRequired).email(a.errors.emailInvalid),
+          newPassword: z.string().min(6, a.errors.passwordMin),
+          confirm: z.string(),
+        })
+        .refine((v) => v.newPassword === v.confirm, { path: ["confirm"], message: a.errors.mismatch }),
+    [a],
+  );
+  type Values = z.infer<typeof schema>;
+  const {
+    register,
+    handleSubmit,
+    reset: resetForm,
+    watch,
+    formState: { errors },
+  } = useForm<Values>({ resolver: zodResolver(schema), defaultValues: { email: "", newPassword: "", confirm: "" } });
+
+  const close = (v: boolean) => {
+    if (!v) {
+      resetForm();
+      reset.reset();
+    }
+    onOpenChange(v);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={close}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>{t.resetTitle}</DialogTitle>
+          <DialogDescription>{t.resetText}</DialogDescription>
+        </DialogHeader>
+        <form
+          id="reset-user-password"
+          noValidate
+          className="space-y-4"
+          onSubmit={handleSubmit((v) =>
+            reset.mutate(
+              { email: v.email.trim(), newPassword: v.newPassword },
+              {
+                onSuccess: (res) => {
+                  toast.success(fmt(t.resetDone, { email: res.user.email }));
+                  close(false);
+                },
+              },
+            ),
+          )}
+        >
+          <FormField label={t.resetEmail} icon={Mail} type="email" autoComplete="off" placeholder={a.emailPlaceholder} error={errors.email?.message} {...register("email")} />
+          <FormField
+            label={dict.account.newPassword}
+            icon={KeyRound}
+            type="password"
+            autoComplete="new-password"
+            error={errors.newPassword?.message}
+            hint={<PasswordStrength password={watch("newPassword")} />}
+            {...register("newPassword")}
+          />
+          <FormField label={a.confirmPassword} icon={KeyRound} type="password" autoComplete="new-password" error={errors.confirm?.message} {...register("confirm")} />
+          {reset.isError && (
+            <div role="alert" className="flex items-start gap-2.5 rounded-xl border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+              <AlertCircle className="mt-0.5 size-4 shrink-0" /> {getErrorMessage(reset.error)}
+            </div>
+          )}
+        </form>
+        <DialogFooter>
+          <Button variant="outline" size="lg" onClick={() => close(false)}>
+            {dict.common.cancel}
+          </Button>
+          <Button type="submit" form="reset-user-password" size="lg" disabled={reset.isPending}>
+            {reset.isPending && <Spinner />} {t.resetSubmit}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export default function CouriersPage() {
   const { dict, lang } = useI18n();
   const t = dict.admin;
   const { data, isPending, isError, error, refetch } = useCouriers();
   const [open, setOpen] = useState(false);
+  const [resetOpen, setResetOpen] = useState(false);
 
   return (
     <>
@@ -115,9 +205,14 @@ export default function CouriersPage() {
         title={t.couriersTitle}
         description={t.couriersSubtitle}
         actions={
-          <Button size="xl" className="shadow-glow" onClick={() => setOpen(true)}>
-            <UserPlus data-icon="inline-start" /> {t.addCourier}
-          </Button>
+          <>
+            <Button size="xl" variant="outline" onClick={() => setResetOpen(true)}>
+              <KeyRound data-icon="inline-start" /> {t.resetPassword}
+            </Button>
+            <Button size="xl" className="shadow-glow" onClick={() => setOpen(true)}>
+              <UserPlus data-icon="inline-start" /> {t.addCourier}
+            </Button>
+          </>
         }
       />
 
@@ -177,6 +272,7 @@ export default function CouriersPage() {
       )}
 
       <AddCourierDialog open={open} onOpenChange={setOpen} />
+      <ResetPasswordDialog open={resetOpen} onOpenChange={setResetOpen} />
     </>
   );
 }
