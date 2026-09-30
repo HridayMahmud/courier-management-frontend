@@ -21,7 +21,7 @@ npm run dev               # API on http://localhost:4000
 ```bash
 npm install
 cp .env.example .env.local   # NEXT_PUBLIC_API_URL=http://localhost:4000
-npm run dev                  # http://localhost:3000  (port busy? npm run dev -- -p 5001)
+npm run dev                  # http://localhost:5001
 ```
 
 **3. Sign in** with the demo accounts created by `npm run seed:demo`:
