@@ -71,7 +71,7 @@ export default function CourierPage() {
       </div>
 
       {isPending ? (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {[0, 1, 2].map((i) => (
             <Skeleton key={i} className="h-80 rounded-2xl" />
           ))}
@@ -81,7 +81,7 @@ export default function CourierPage() {
       ) : list.length === 0 ? (
         <EmptyState icon={tab === "active" ? Truck : CircleCheckBig} title={tab === "active" ? t.emptyActive : t.emptyDone} text={tab === "active" ? t.emptyActiveText : undefined} />
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           <AnimatePresence initial={false} mode="popLayout">
             {list.map((p) => (
               <motion.div key={p._id} layout initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}>

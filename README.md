@@ -6,18 +6,40 @@ Next.js 15 (App Router) frontend for the courier management backend.
 Next.js 15 · TypeScript · Tailwind CSS v4 · shadcn/ui (Radix) · Motion · TanStack Query · Axios ·
 React Hook Form + Zod · Recharts · next-themes · Sonner
 
-## Getting started
-1. Start the backend (see `courier-management-backend/README.md`), by default on `http://localhost:4000`.
-2. Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_API_URL` if the backend runs elsewhere.
-3. Install and run:
-   ```bash
-   npm install
-   npm run dev
-   ```
-   Open http://localhost:3000.
+## Quick start (local)
+You need two terminals: one for the backend API, one for this frontend.
+
+**1. Backend** (`courier-management-backend`, see its README for details)
+```bash
+npm install
+cp .env.example .env      # fill in MONGODB_URI, JWT_SECRET, ADMIN_EMAIL, ADMIN_PASSWORD
+npm run seed:demo         # your admin + demo accounts and sample parcels (or: npm run seed)
+npm run dev               # API on http://localhost:4000
+```
+
+**2. Frontend** (this repo)
+```bash
+npm install
+cp .env.example .env.local   # NEXT_PUBLIC_API_URL=http://localhost:4000
+npm run dev                  # http://localhost:3000  (port busy? npm run dev -- -p 5001)
+```
+
+**3. Sign in** with the demo accounts created by `npm run seed:demo`:
+
+| Role | Email | Password |
+|---|---|---|
+| Admin | admin@swiftship.test | Admin@123 |
+| Courier | courier@swiftship.test | Courier@123 |
+| Customer | customer@swiftship.test | Customer@123 |
+
+Or create a customer on the Register page. Couriers are added by an admin under Admin → Couriers.
+
+If pages say "Cannot reach the server", the backend is not running or `NEXT_PUBLIC_API_URL` points to the wrong address.
+"Forgot password" without Gmail settings prints the reset code in the backend terminal.
 
 ## Scripts
-- `npm run dev` — development server
+- `npm run dev` — development server (webpack; works even where Windows Smart App Control blocks native binaries)
+- `npm run dev:turbo` — faster development server with Turbopack (needs the native Next.js compiler)
 - `npm run build` — production build
 - `npm run start` — serve the production build
 - `npm run lint` — ESLint

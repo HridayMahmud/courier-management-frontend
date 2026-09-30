@@ -55,7 +55,7 @@ export const en = {
     trackPlaceholder: "Enter tracking ID, e.g. SS-8F3K2Q9P",
     trackButton: "Track",
     trackHint: "No account needed to track a parcel.",
-    heroCard: { title: "Today’s deliveries", onTime: "On time", live: "Live" },
+    heroCard: { title: "Today’s deliveries", onTime: "On time", live: "Live", sample: "Sample preview" },
     stats: [
       { value: 6, suffix: "", label: "delivery stages tracked" },
       { value: 3, suffix: "", label: "dashboards: customer, courier, admin" },
@@ -362,11 +362,7 @@ export const en = {
   footer: {
     rights: "All rights reserved.",
     product: "Product",
-    company: "Company",
-    about: "About",
-    contact: "Contact",
-    privacy: "Privacy",
-    terms: "Terms",
+    account: "Account",
     blurb: "Fast, transparent parcel delivery with live tracking from pickup to doorstep.",
   },
 };

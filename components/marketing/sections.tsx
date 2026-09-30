@@ -53,7 +53,7 @@ export function Features() {
     <section id="features" className="scroll-mt-20 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading eyebrow={t.featuresEyebrow} title={t.featuresTitle} subtitle={t.featuresSubtitle} />
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {t.features.map((f, i) => {
             const Icon = FEATURE_ICONS[i];
             return (
@@ -120,7 +120,7 @@ export function Highlights() {
     <section className="py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading eyebrow={t.highlightsEyebrow} title={t.highlightsTitle} />
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           {t.highlights.map((item, i) => {
             const Icon = HIGHLIGHT_ICONS[i];
             return (

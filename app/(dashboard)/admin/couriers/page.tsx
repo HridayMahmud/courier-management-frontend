@@ -122,7 +122,7 @@ export default function CouriersPage() {
       />
 
       {isPending ? (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {[0, 1, 2].map((i) => (
             <Skeleton key={i} className="h-40 rounded-2xl" />
           ))}
@@ -141,7 +141,7 @@ export default function CouriersPage() {
           }
         />
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {data.map((c, i) => {
             const load = workload(c.activeParcels);
             return (

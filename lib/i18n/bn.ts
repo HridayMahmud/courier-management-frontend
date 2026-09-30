@@ -56,7 +56,7 @@ export const bn: Dictionary = {
     trackPlaceholder: "ট্র্যাকিং আইডি দিন, যেমন SS-8F3K2Q9P",
     trackButton: "ট্র্যাক",
     trackHint: "ট্র্যাক করতে কোনো অ্যাকাউন্ট লাগবে না।",
-    heroCard: { title: "আজকের ডেলিভারি", onTime: "সময়মতো", live: "লাইভ" },
+    heroCard: { title: "আজকের ডেলিভারি", onTime: "সময়মতো", live: "লাইভ", sample: "নমুনা প্রিভিউ" },
     stats: [
       { value: 6, suffix: "", label: "ডেলিভারি ধাপ ট্র্যাক হয়" },
       { value: 3, suffix: "", label: "ড্যাশবোর্ড: গ্রাহক, কুরিয়ার, অ্যাডমিন" },
@@ -363,11 +363,7 @@ export const bn: Dictionary = {
   footer: {
     rights: "সর্বস্বত্ব সংরক্ষিত।",
     product: "প্রোডাক্ট",
-    company: "প্রতিষ্ঠান",
-    about: "আমাদের সম্পর্কে",
-    contact: "যোগাযোগ",
-    privacy: "গোপনীয়তা",
-    terms: "শর্তাবলি",
+    account: "অ্যাকাউন্ট",
     blurb: "পিকআপ থেকে দরজা পর্যন্ত লাইভ ট্র্যাকিংসহ দ্রুত ও স্বচ্ছ পার্সেল ডেলিভারি।",
   },
 };

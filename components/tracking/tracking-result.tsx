@@ -99,7 +99,7 @@ export function TrackingResult({ trackingId }: { trackingId: string }) {
                   <StatusBadge status={data.status} withIcon className="px-3 py-1 text-sm" />
                 </div>
               </div>
-              <dl className="grid gap-4 sm:grid-cols-3">
+              <dl className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div className="flex items-center gap-3 rounded-xl bg-muted/50 p-3">
                   <CalendarDays className="size-4.5 text-muted-foreground" />
                   <div>

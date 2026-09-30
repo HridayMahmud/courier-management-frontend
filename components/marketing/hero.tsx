@@ -37,13 +37,7 @@ function HeroVisual() {
       <div className="glass rounded-3xl border p-4 shadow-soft sm:p-5">
         <div className="mb-4 flex items-center justify-between">
           <p className="text-sm font-semibold">{dict.landing.heroCard.title}</p>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/12 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-300">
-            <span className="relative flex size-2">
-              <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-70" />
-              <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-            </span>
-            {dict.landing.heroCard.live}
-          </span>
+          <span className="rounded-full border border-dashed px-2.5 py-1 text-xs font-medium text-muted-foreground">{dict.landing.heroCard.sample}</span>
         </div>
         <div className="bg-grid relative h-44 overflow-hidden rounded-2xl border bg-muted/40 sm:h-52">
           <RouteAnimation className="text-foreground" />

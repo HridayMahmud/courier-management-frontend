@@ -54,7 +54,7 @@ export function EditParcelDialog({ parcel, open, onOpenChange }: { parcel: Parce
               },
             }),
           )}
-          className="grid gap-5 sm:grid-cols-2"
+          className="grid grid-cols-1 gap-5 sm:grid-cols-2"
           noValidate
         >
           <FormField label={p.title} icon={Package} error={errors.title?.message} {...register("title")} />

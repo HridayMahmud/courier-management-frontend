@@ -197,7 +197,7 @@ export default function NewParcelPage() {
                     )}
                     {step === 1 && (
                       <>
-                        <div className="grid gap-5 sm:grid-cols-2">
+                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                           <FormField label={p.receiverName} icon={User} placeholder={p.receiverNamePlaceholder} autoFocus error={errors.receiverName?.message} {...register("receiverName")} />
                           <FormField
                             label={p.receiverPhone}
@@ -213,7 +213,7 @@ export default function NewParcelPage() {
                       </>
                     )}
                     {step === 2 && (
-                      <div className="grid gap-5 sm:grid-cols-[1fr_180px]">
+                      <div className="grid grid-cols-1 gap-5 sm:grid-cols-[1fr_180px]">
                         <FormField label={p.title} icon={Package} placeholder={p.titlePlaceholder} autoFocus error={errors.title?.message} {...register("title")} />
                         <FormField label={p.weight} icon={Scale} inputMode="decimal" placeholder={p.weightPlaceholder} error={errors.weight?.message} {...register("weight")} />
                       </div>

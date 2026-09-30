@@ -16,10 +16,10 @@ export function SiteFooter() {
       ],
     },
     {
-      title: dict.footer.company,
+      title: dict.footer.account,
       links: [
-        { href: "/#features", label: dict.footer.about },
-        { href: "mailto:support@swiftship.test", label: dict.footer.contact },
+        { href: "/login", label: dict.common.signIn },
+        { href: "/register", label: dict.common.signUp },
       ],
     },
   ];
@@ -51,10 +51,6 @@ export function SiteFooter() {
           <p>
             © {new Date().getFullYear()} SwiftShip. {dict.footer.rights}
           </p>
-          <div className="flex gap-4">
-            <span>{dict.footer.privacy}</span>
-            <span>{dict.footer.terms}</span>
-          </div>
         </div>
       </div>
     </footer>

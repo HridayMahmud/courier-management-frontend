@@ -56,7 +56,7 @@ export function ParcelInfo({ parcel, showSender = false }: { parcel: Parcel; sho
         <CardHeader>
           <CardTitle className="text-base">{p.details}</CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-5 sm:grid-cols-2">
+        <CardContent className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <Row icon={Package} label={p.title}>
             {parcel.title}
           </Row>
